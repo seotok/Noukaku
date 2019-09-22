@@ -1,6 +1,6 @@
 # LoRaConsole -made by Eu93n3-
 ## 概要
-ES920LR用
+ES920LR, ESP32用
 
 Arduino IDE のシリアルモニタで ES920LR の制御をするためのプログラム
 
