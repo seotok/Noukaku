@@ -1,3 +1,5 @@
+﻿// LoRaConsole
+// made by Eu93n3
 // シリアルモニタからコマンドを直接入力して制御するためのプログラム
 // reset と入力するとLoRaをリセットするようになっている
 // config と入力するとLoRaのリセット後にconfigurationモードへ移行
