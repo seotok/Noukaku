@@ -1,11 +1,11 @@
-#LoRaConsole
-#made by Eu93n3
-##概要
+# LoRaConsole
+# made by Eu93n3
+## 概要
 ES920LR用
 
 Arduino IDE のシリアルモニタで ES920LR の制御をするためのプログラム
 
-##使い方
+## 使い方
 1. ESP32に書き込む
 2. シリアルモニタを開く *115200bpsに設定すること
 3. シリアルモニタ上の欄に文字列を入力し送信を押すと ES920LR に送信
