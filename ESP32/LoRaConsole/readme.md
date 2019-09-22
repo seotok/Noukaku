@@ -1,5 +1,4 @@
-# LoRaConsole
-# made by Eu93n3
+# LoRaConsole -made by Eu93n3-
 ## ŠT—v
 ES920LR—p
 
