@@ -1,0 +1,34 @@
+.slider {
+  // スライドバー自体の横幅
+  width: 810px;
+  .slider {
+    -webkit-appearance: none;
+    margin: 14px 0;
+    width: 100%;
+    &:focus {
+      outline: none;
+      &::-webkit-slider-runnable-track {
+        background: #3f51b5;
+      }
+    }
+    // スライドバーの横軸
+    &::-webkit-slider-runnable-track {
+      cursor: pointer;
+      background: #3f51b5;
+      border-radius: 1.3px;
+      height: 8px;
+      width: 100%;
+    }
+    // スライドバーのつまみ
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      background: #3f51b5;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      height: 36px;
+      margin-top: -14px;
+      width: 20px;
+    }
+  }
+}
