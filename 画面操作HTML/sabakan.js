@@ -34,7 +34,7 @@ function sabakan() {
 
 		let ServerMessage = position.coords.latitude + " " + position.coords.longitude;
 
-		document.getElementById("SabakanOutput").innerHTML = ServerMessage + "<br>";
+		document.getElementById("SabakanOutput").innerHTML = "<br>";
 		for (i = 0; i < PositionArray.length; i++) {
 			PositionArray[i].d = getDistance(position.coords.longitude, position.coords.latitude, PositionArray[i].x, PositionArray[i].y);
 		}
