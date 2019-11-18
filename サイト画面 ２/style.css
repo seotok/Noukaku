@@ -1,0 +1,70 @@
+li{
+  list-style-type: none;
+}
+
+h1{
+  font-size: 6vw;
+}
+
+.namber ul{
+  padding: 0px;
+}
+.namber li{
+  padding: 10px;
+}
+.namber input[type="radio"]{
+  display: none;
+}
+.namber label{
+  border-radius: 50%;
+  font-size: 5vw;
+  display:inline-block;
+  color: black;
+  background-color:skyblue;
+  padding:5px 10px;
+}
+.namber input[type="radio"]:checked + label{
+  background-color:magenta;
+}
+.namber output{
+  font-size: 6vw;
+}
+.namber input[type="range"]{
+  width: 65%;
+}
+
+.search{
+  text-align: center;
+}
+.search button{
+  background-color: tomato;
+}
+.search h2{
+  margin: 5px;
+  padding: 0px;
+  font-size: 5vw
+}
+.search p{
+  margin: 5px;
+  padding: 0px;
+  font-size: 3vw
+}
+
+.others li{
+  text-decoration: none;
+  margin-left: auto;
+  margin-right: auto;
+  background-color:#ddeeff;
+    border:1px solid #ccc;
+    padding:5px;
+    cursor:pointer;
+}
+.others button{
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 4vw;
+}
+.others ul{
+  padding: 0px;
+  display: flex;
+}
