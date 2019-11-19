@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+<script type="text/javascript">
+// ピンの新たな状態の送信
+function changePinState( pin, state )
+{
+  // フォームの作成
+  var form = document.createElement( "form" );
+  form.setAttribute( "action", "/changepinstate" ); // 送信先URL
+  form.setAttribute( "method", "post" );  // POSTリクエスト送信
+  form.setAttribute( "target", "hiddeniframe" );  // 画面遷移しないための仕掛け
+  form.style.display = "none";  // 画面表示なし
+  document.body.appendChild( form );  // bodyの子要素として追加
+
+  // パラメータの設定
+  var input;
+  // PIN番号の設定
+  input = document.createElement( "input" );
+  input.setAttribute( "type", "hidden" );
+  input.setAttribute( "name", "pin" );  // パラメータ名は"pin"
+  input.setAttribute( "value", pin );   // PIN番号
+  form.appendChild( input );
+  // 状態の設定
+  input = document.createElement( "input" );
+  input.setAttribute( "type", "hidden" );
+  input.setAttribute( "name", "state" );  // パラメータ名は"state"
+  input.setAttribute( "value", state );   // 状態値
+  form.appendChild( input );
+
+  // 送信
+  form.submit();
+}
+
+// チェックボックスをクリックしたときのイベントハンドラ
+function onCheckboxLed( led )
+{
+	if( 1 == led )
+	{  // ピンの新たな状態の送信
+    changePinState( "1", document.getElementsByName("led1")[0].checked ? "1" : "0" );
+		return;
+	}
+	if( 2 == led )
+	{  // ピンの新たな状態の送信
+    changePinState( "2", document.getElementsByName("led2")[0].checked ? "1" : "0" );
+		return;
+	}
+	if( 3 == led )
+	{  // ピンの新たな状態の送信
+    changePinState( "3", document.getElementsByName("led3")[0].checked ? "1" : "0" );
+		return;
+	}
+}
+</script>
+</head>
+<body>
+LED :<br>
+LED1<input type="checkbox" name="led1" onclick="onCheckboxLed(1)"><br>
+LED2<input type="checkbox" name="led2" onclick="onCheckboxLed(2)"><br>
+LED3<input type="checkbox" name="led3" onclick="onCheckboxLed(3)"><br>
+<iframe hidden name="hiddeniframe"></iframe>
+</body>
+</html>

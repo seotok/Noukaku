@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+<title>TESTPAGE</title>
+<style>#slider{width:100px;}</style>
+</head>
+
+<script type="text/javascript">
+function PythonFunction(URL, value)
+{
+  var form = document.createElement( "form" );
+  form.setAttribute( "action", URL ); // 送信先URL
+  form.setAttribute( "method", "post" );  // POSTリクエスト送信
+  form.setAttribute( "target", "hiddeniframe" );  // 画面遷移しないための仕掛け
+  //form.setAttribute( "value",  10);
+  form.style.display = "none";  // 画面表示なし
+  document.body.appendChild( form );  // bodyの子要素として追加
+
+  var input = document.createElement( "input" );
+  input.setAttribute( "type", "hidden");
+  input.setAttribute( "name", "val");
+  input.setAttribute( "value", value);
+  form.appendChild(input);
+  
+  form.submit();
+}
+
+$(function()
+{
+  $("#slider").slider(
+  {
+    max: 16,  // 最大値
+    min:  0,  // 最小値
+    value:0,  // 初期値
+    step: 4,  // 変化の単位
+    //orientation: "vertical",  // 設置向き
+
+    slide: function(event, ui)
+    {
+      length(ui.value);
+    },
+    change: function(event, ui)
+    {
+      length(ui.value);
+      PythonFunction("/Gate", ui.value);
+    }
+    
+  });
+});
+
+function length(cm)
+{
+  $("#slidervalue").html(cm+"cm");
+}
+</script>
+
+
+<body>
+<script type="text/javascript" src="static/js/node_modules/moment/moment.js"></script>
+<script type="text/javascript" src="static/js/node_modules/chart.js/dist/Chart.js"></script>
+
+<center>
+<button name="LED" onClick="PythonFunction('/LEDTest', 0)">LED</button><br>
+<button name="Gate" onClick="PythonFunction('/MotorTest', 0)">Gate</button>
+<button name="Dev2" onClick="PythonFunction('/DevMotorTest', 2)">Dev2</button>
+<button name="Dev3" onClick="PythonFunction('/DevMotorTest', 3)">Dev3</button>
+<button name="erase" onClick="PythonFunction('/logeraser', 'testest.txt')">erase</button><br>
+<div id="slidervalue">0cm</div>
+<div id="slider"></div>
+</center>
+<iframe hidden name="hiddeniframe"></iframe>
+
+<!--
+<canvas id="myChart" width="400" height="400"></canvas>
+-->
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ["赤", "青", "黄色", "緑", "紫", "橙"],
+        datasets: [{
+            label: '得票数',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+</body>
+</html>

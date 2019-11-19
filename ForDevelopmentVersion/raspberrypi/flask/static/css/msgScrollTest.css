@@ -1,0 +1,11 @@
+body{
+    background: #81bcd8;
+}
+.site-header{
+    background: #fff;
+    display: flex;
+    padding: 60px 20px;
+    position: fixed;
+    justify-content: space-between;
+    width: 100%;
+}

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html lang = "ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset="utf-8">
+    <title>水位調整</title>
+    <link rel = "stylesheet" href = "style.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="static/js/PythonFunctions.js"></script>
+    <style>#slider{width:100px;}</style>
+  </head>
+  <body>
+    <header>
+      <h1>水位を設定してください</h1>
+    </header>
+    <div class="namber">
+      <ul>
+        <li>
+          <input type="radio" name="no" id="13">
+          <label for="13">13</label>
+          <div id="slider">13</div>
+          <output id="slidervalue">0cm</output>
+        </li>
+        <li>
+          <input type="radio" name="no" id="13">
+          <label for="13">13</label>
+          <div id="slider">13</div>
+          <output id="slidervalue">0cm</output>
+        </li>
+        <li>
+          <input type="radio" name="no" id="14">
+          <label for="14">14</label>
+          <input type="range" value="8" min="0" max="16" step="1"
+              oninput="document.getElementById('output2').value=this.value">
+          <output id="output2">8</output>
+          <nobr>cm</nobr>
+        </li>
+        <li>
+          <input type="radio" name="no" id="12">
+          <label for="12">12</label>
+          <input type="range" value="8" min="0" max="16" step="1"
+              oninput="document.getElementById('output3').value=this.value">
+          <output id="output3">8</output>
+          <nobr>cm</nobr>
+        </li>
+        <li>
+          <input type="radio" name="no" id="11">
+          <label for="11">11</label>
+          <input type="range" value="8" min="0" max="16" step="1"
+              oninput="document.getElementById('output4').value=this.value">
+          <output id="output4">8</output>
+          <nobr>cm</nobr>
+        </li>
+        <li>
+          <input type="radio" name="no" id="15">
+          <label for="15">15</label>
+          <input type="range" value="8" min="0" max="16" step="1"
+              oninput="document.getElementById('output5').value=this.value">
+          <output id="output5">8</output>
+          <nobr>cm</nobr>
+        </li>
+        
+      </ul>
+    </div>
+    <div class="search">
+      <button type="button">
+        <h2>もう一度検索</h2>
+        <p>目的の排水門が表示されない場合に操作してください</p>
+      </button>
+    </div>
+    <div class="others">
+      <ul>
+        <li>
+          <a href="data.html" style="text-decoration: none">データ</a>
+        </li>
+        <li>
+          <a href="set.html" style="text-decoration: none">設定</a>
+        </li>
+      </ul>
+    </div>
+  <iframe hidden name="hiddeniframe"></iframe>
+  </body>
+</html>
