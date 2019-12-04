@@ -1,9 +1,8 @@
-/*
+
 //javaからボタンの文字を変更
 document.getElementById('nyann').innerHTML = 'にゃんにゃん先生';
 document.getElementById('neko').innerHTML = 'にゃんこ先生';
 document.getElementById('cat').innerHTML = 'にゃんこ戦士';
-*/
 
 
 /*
@@ -14,7 +13,7 @@ document.body.appendChild(p);
 */
 
 
-/*
+
 //配列的なものでボタンの中身を送りたい
 var nyanko = ['ミケ', 'ハル', 'ハチ', 'エリー'];
 
@@ -22,7 +21,6 @@ document.getElementById('h0').innerHTML = nyanko[0];
 document.getElementById('h1').innerHTML = nyanko[1];
 document.getElementById('h2').innerHTML = nyanko[2];
 document.getElementById('h3').innerHTML = nyanko[3];
-*/
 
 
 //構造体的な物でボタンの中身を作りたい
