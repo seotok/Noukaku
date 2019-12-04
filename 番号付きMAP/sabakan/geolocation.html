@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>geolocation.md</title>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+		<style>
+			/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+			body {
+				font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+				font-size: 14px;
+				padding: 0 12px;
+				line-height: 22px;
+				word-wrap: break-word;
+			}
+
+			#code-csp-warning {
+				position: fixed;
+				top: 0;
+				right: 0;
+				color: white;
+				margin: 16px;
+				text-align: center;
+				font-size: 12px;
+				font-family: sans-serif;
+				background-color: #444444;
+				cursor: pointer;
+				padding: 6px;
+				box-shadow: 1px 1px 1px rgba(0, 0, 0, .25);
+			}
+
+			#code-csp-warning:hover {
+				text-decoration: none;
+				background-color: #007acc;
+				box-shadow: 2px 2px 2px rgba(0, 0, 0, .25);
+			}
+
+
+			body.scrollBeyondLastLine {
+				margin-bottom: calc(100vh - 22px);
+			}
+
+			body.showEditorSelection .code-line {
+				position: relative;
+			}
+
+			body.showEditorSelection .code-active-line:before,
+			body.showEditorSelection .code-line:hover:before {
+				content: "";
+				display: block;
+				position: absolute;
+				top: 0;
+				left: -12px;
+				height: 100%;
+			}
+
+			body.showEditorSelection li.code-active-line:before,
+			body.showEditorSelection li.code-line:hover:before {
+				left: -30px;
+			}
+
+			.vscode-light.showEditorSelection .code-active-line:before {
+				border-left: 3px solid rgba(0, 0, 0, 0.15);
+			}
+
+			.vscode-light.showEditorSelection .code-line:hover:before {
+				border-left: 3px solid rgba(0, 0, 0, 0.40);
+			}
+
+			.vscode-dark.showEditorSelection .code-active-line:before {
+				border-left: 3px solid rgba(255, 255, 255, 0.4);
+			}
+
+			.vscode-dark.showEditorSelection .code-line:hover:before {
+				border-left: 3px solid rgba(255, 255, 255, 0.60);
+			}
+
+			.vscode-high-contrast.showEditorSelection .code-active-line:before {
+				border-left: 3px solid rgba(255, 160, 0, 0.7);
+			}
+
+			.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+				border-left: 3px solid rgba(255, 160, 0, 1);
+			}
+
+			img {
+				max-width: 100%;
+				max-height: 100%;
+			}
+
+			a {
+				color: #4080D0;
+				text-decoration: none;
+			}
+
+			a:focus,
+			input:focus,
+			select:focus,
+			textarea:focus {
+				outline: 1px solid -webkit-focus-ring-color;
+				outline-offset: -1px;
+			}
+
+			hr {
+				border: 0;
+				height: 2px;
+				border-bottom: 2px solid;
+			}
+
+			h1 {
+				padding-bottom: 0.3em;
+				line-height: 1.2;
+				border-bottom-width: 1px;
+				border-bottom-style: solid;
+			}
+
+			h1,
+			h2,
+			h3 {
+				font-weight: normal;
+			}
+
+			h1 code,
+			h2 code,
+			h3 code,
+			h4 code,
+			h5 code,
+			h6 code {
+				font-size: inherit;
+				line-height: auto;
+			}
+
+			a:hover {
+				color: #4080D0;
+				text-decoration: underline;
+			}
+
+			table {
+				border-collapse: collapse;
+			}
+
+			table>thead>tr>th {
+				text-align: left;
+				border-bottom: 1px solid;
+			}
+
+			table>thead>tr>th,
+			table>thead>tr>td,
+			table>tbody>tr>th,
+			table>tbody>tr>td {
+				padding: 5px 10px;
+			}
+
+			table>tbody>tr+tr>td {
+				border-top: 1px solid;
+			}
+
+			blockquote {
+				margin: 0 7px 0 5px;
+				padding: 0 16px 0 10px;
+				border-left: 5px solid;
+			}
+
+			code {
+				font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+				font-size: 14px;
+				line-height: 19px;
+			}
+
+			body.wordWrap pre {
+				white-space: pre-wrap;
+			}
+
+			.mac code {
+				font-size: 12px;
+				line-height: 18px;
+			}
+
+			pre:not(.hljs),
+			pre.hljs code>div {
+				padding: 16px;
+				border-radius: 3px;
+				overflow: auto;
+			}
+
+			/** Theming */
+
+			.vscode-light,
+			.vscode-light pre code {
+				color: rgb(30, 30, 30);
+			}
+
+			.vscode-dark,
+			.vscode-dark pre code {
+				color: #DDD;
+			}
+
+			.vscode-high-contrast,
+			.vscode-high-contrast pre code {
+				color: white;
+			}
+
+			.vscode-light code {
+				color: #A31515;
+			}
+
+			.vscode-dark code {
+				color: #D7BA7D;
+			}
+
+			.vscode-light pre:not(.hljs),
+			.vscode-light code>div {
+				background-color: rgba(220, 220, 220, 0.4);
+			}
+
+			.vscode-dark pre:not(.hljs),
+			.vscode-dark code>div {
+				background-color: rgba(10, 10, 10, 0.4);
+			}
+
+			.vscode-high-contrast pre:not(.hljs),
+			.vscode-high-contrast code>div {
+				background-color: rgb(0, 0, 0);
+			}
+
+			.vscode-high-contrast h1 {
+				border-color: rgb(0, 0, 0);
+			}
+
+			.vscode-light table>thead>tr>th {
+				border-color: rgba(0, 0, 0, 0.69);
+			}
+
+			.vscode-dark table>thead>tr>th {
+				border-color: rgba(255, 255, 255, 0.69);
+			}
+
+			.vscode-light h1,
+			.vscode-light hr,
+			.vscode-light table>tbody>tr+tr>td {
+				border-color: rgba(0, 0, 0, 0.18);
+			}
+
+			.vscode-dark h1,
+			.vscode-dark hr,
+			.vscode-dark table>tbody>tr+tr>td {
+				border-color: rgba(255, 255, 255, 0.18);
+			}
+
+			.vscode-light blockquote,
+			.vscode-dark blockquote {
+				background: rgba(127, 127, 127, 0.1);
+				border-color: rgba(0, 122, 204, 0.5);
+			}
+
+			.vscode-high-contrast blockquote {
+				background: transparent;
+				border-color: #fff;
+			}
+
+		</style>
+
+		<style>
+			/* Tomorrow Theme */
+			/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+			/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+			/* Tomorrow Comment */
+			.hljs-comment,
+			.hljs-quote {
+				color: #8e908c;
+			}
+
+			/* Tomorrow Red */
+			.hljs-variable,
+			.hljs-template-variable,
+			.hljs-tag,
+			.hljs-name,
+			.hljs-selector-id,
+			.hljs-selector-class,
+			.hljs-regexp,
+			.hljs-deletion {
+				color: #c82829;
+			}
+
+			/* Tomorrow Orange */
+			.hljs-number,
+			.hljs-built_in,
+			.hljs-builtin-name,
+			.hljs-literal,
+			.hljs-type,
+			.hljs-params,
+			.hljs-meta,
+			.hljs-link {
+				color: #f5871f;
+			}
+
+			/* Tomorrow Yellow */
+			.hljs-attribute {
+				color: #eab700;
+			}
+
+			/* Tomorrow Green */
+			.hljs-string,
+			.hljs-symbol,
+			.hljs-bullet,
+			.hljs-addition {
+				color: #718c00;
+			}
+
+			/* Tomorrow Blue */
+			.hljs-title,
+			.hljs-section {
+				color: #4271ae;
+			}
+
+			/* Tomorrow Purple */
+			.hljs-keyword,
+			.hljs-selector-tag {
+				color: #8959a8;
+			}
+
+			.hljs {
+				display: block;
+				overflow-x: auto;
+				color: #4d4d4c;
+				padding: 0.5em;
+			}
+
+			.hljs-emphasis {
+				font-style: italic;
+			}
+
+			.hljs-strong {
+				font-weight: bold;
+			}
+
+		</style>
+
+		<style>
+			/*
+ * Markdown PDF CSS
+ */
+
+			body {
+				font-family: "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+			}
+
+			pre {
+				background-color: #f8f8f8;
+				border: 1px solid #cccccc;
+				border-radius: 3px;
+				overflow-x: auto;
+				white-space: pre-wrap;
+				overflow-wrap: break-word;
+			}
+
+			pre:not(.hljs) {
+				padding: 23px;
+				line-height: 19px;
+			}
+
+			blockquote {
+				background: rgba(127, 127, 127, 0.1);
+				border-color: rgba(0, 122, 204, 0.5);
+			}
+
+			.emoji {
+				height: 1.4em;
+			}
+
+			/* for inline code */
+			:not(pre):not(.hljs)>code {
+				color: #C9AE75;
+				/* Change the old color so it seems less like an error */
+				font-size: inherit;
+			}
+
+			/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+			.page {
+				page-break-after: always;
+			}
+
+		</style>
+
+	</head>
+
+	<body>
+		<h1 id="%E4%BD%8D%E7%BD%AE%E6%83%85%E5%A0%B1%E3%81%AE%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95-geolocation-api">位置情報の利用方法
+			(Geolocation API)</h1>
+		<h2 id="geolocation-api-%E3%81%A8%E3%81%AF%EF%BC%9F">Geolocation API とは？</h2>
+		<ul>
+			<li>ユーザの位置情報を取得するためのAPI</li>
+			<li>W3C で仕様策定される</li>
+			<li>JavaScript で位置情報を取得できる</li>
+			<li>すでにメジャーブラウザで対応</li>
+			<li>スマホだけでなく PC でも利用可能</li>
+		</ul>
+		<h2 id="%E3%81%A9%E3%82%93%E3%81%AA%E3%81%97%E3%81%8F%E3%81%BF%EF%BC%9F">どんなしくみ？</h2>
+		<ul>
+			<li>無線LAN, 携帯電話基地局, GPS, IPアドレスなどを利用
+				<ul>
+					<li>→ 精度や取得にかかる時間にばらつきがある</li>
+				</ul>
+			</li>
+		</ul>
+		<h2 id="%E3%82%BB%E3%82%AD%E3%83%A5%E3%83%AA%E3%83%86%E3%82%A3%E3%81%A8%E3%81%8B">セキュリティとか</h2>
+		<ul>
+			<li>ユーザのセキュリティとプライバシーに配慮した設計</li>
+			<li>利用するにはユーザの許可が必要
+				<ul>
+					<li>利用しようとすると確認ダイアログが出たりする</li>
+				</ul>
+			</li>
+		</ul>
+		<h2 id="%E4%BD%BF%E3%81%88%E3%82%8B%E3%81%8B%E8%AA%BF%E3%81%B9%E3%82%8B">使えるか調べる</h2>
+		<p>Geolocation API は <code>navigator.geolocation</code> オブジェクトとして利用可能。</p>
+		<p>JavaScript が未定義のオブジェクトに対して <code>undefined</code> の値を返し、それを <code>false</code> として扱う性質を利用する。</p>
+		<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (navigator.geolocation) {
+	<span class="hljs-comment">// 使えるときの処理</span>
+}
+<span class="hljs-keyword">else</span> {
+	<span class="hljs-comment">// 使えないときの処理</span>
+}
+</div></code></pre>
+		<p>MDN では以下のコードが紹介されていた</p>
+		<pre class="hljs"><code><div><span class="hljs-keyword">if</span> (<span class="hljs-string">"geolocation"</span> <span class="hljs-keyword">in</span> navigator) {
+	<span class="hljs-comment">/* geolocation is available */</span>
+} <span class="hljs-keyword">else</span> {
+	<span class="hljs-comment">/* geolocation is NOT available */</span>
+}
+</div></code></pre>
+		<h2
+			id="%E4%BD%8D%E7%BD%AE%E6%83%85%E5%A0%B1%E5%8F%96%E5%BE%97%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89">
+			位置情報取得に関するメソッド</h2>
+		<h3 id="%E4%B8%80%E5%9B%9E%E3%81%A0%E3%81%91%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B">一回だけ取得する</h3>
+		<p>とりあえず一度だけ位置情報を取得するなら <code>getCurrentPosition()</code> メソッドを利用する。
+			この機能は <strong>HTTPS でのみ利用できる</strong>。</p>
+		<h4 id="%E6%A7%8B%E6%96%87">構文</h4>
+		<pre class="hljs"><code><div>navigator.geolocation.getCurrentPosition(success[, error[, [options]]])
+</div></code></pre>
+		<h4 id="%E5%BC%95%E6%95%B0">引数</h4>
+		<ul>
+			<li><code>success</code>
+				<ul>
+					<li>コールバック関数。</li>
+					<li>成功した時に呼び出される。</li>
+					<li>引数として <code>Position</code> オブジェクトが渡される。</li>
+				</ul>
+			</li>
+			<li><code>error</code> (省略可能)
+				<ul>
+					<li>コールバック関数。</li>
+					<li>失敗した時に呼び出される。</li>
+					<li>引数として <code>PositionError</code> オブジェクトが渡される。</li>
+				</ul>
+			</li>
+			<li><code>options</code> (省略可能)
+				<ul>
+					<li><code>PositionOptions</code> オブジェクト。
+						<ul>
+							<li><code>maximumAge</code>: キャッシュされた位置情報の最大寿命(㎳)を整数か infinity で指定。</li>
+							<li><code>timeout</code>: エラー判定されるまでの時間(㎳)。0 の場合はタイムアウトしない。</li>
+							<li><code>enableHighAccuracy</code>: true の時、高精度で位置情報を返そうとする。</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		<h4 id="%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB">サンプル</h4>
+		<p>このサンプルは、ユーザの現在地を緯度経度でアラート表示する。</p>
+		<pre class="hljs"><code><div><span class="hljs-comment">// 成功した時の関数</span>
+<span class="hljs-keyword">let</span> success = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">pos</span>) </span>{
+	alert(<span class="hljs-string">`おまいは今、経度<span class="hljs-subst">${pos.coords.latitude}</span>°, 緯度<span class="hljs-subst">${pos.coords.longitude}</span>°の<span class="hljs-subst">${crd.coords.accyrary}</span>m圏内にいるな！`</span>);
+}
+
+<span class="hljs-comment">// エラーった時の関数</span>
+<span class="hljs-keyword">let</span> error = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+	alert(<span class="hljs-string">`Error <span class="hljs-subst">${err.code}</span>: <span class="hljs-subst">${err.message}</span>`</span>);
+}
+
+<span class="hljs-comment">// オプション</span>
+<span class="hljs-keyword">let</span> opt = {
+	<span class="hljs-attr">enableHighAccuracy</span>: <span class="hljs-literal">true</span>,	<span class="hljs-comment">// 高精度で頂戴</span>
+	maximumAge: <span class="hljs-number">0</span>	<span class="hljs-comment">// 常に最新の位置を頂戴</span>
+};
+
+<span class="hljs-comment">// 取得してみる</span>
+navigator.geolocation.getCurrentPosition(success, error, opt);
+</div></code></pre>
+		<h4 id="position-%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88">Position オブジェクト</h4>
+		<p>HTTPS接続下で利用可能で、以下の子要素を持つ:</p>
+		<pre class="hljs"><code><div>Position
+	.coords : Coordinates <span class="hljs-comment">// 地球上における座標情報</span>
+		.latitude : double <span class="hljs-comment">// 緯度[°]</span>
+		.longitude : double <span class="hljs-comment">// 経度[°]</span>
+		.altitude : double <span class="hljs-comment">// 海抜高度[m]</span>
+		.accuracy : double <span class="hljs-comment">// 緯度経度の誤差[m]</span>
+		.altitudeAccuracy : double <span class="hljs-comment">// 高度誤差[m] nullるかもしれない</span>
+		.heading : double <span class="hljs-comment">// 移動方向[°](東が90) speedが0の時はNaN nullるかも</span>
+		.speed : double <span class="hljs-comment">// 移動速度[mps] nullるかも</span>
+	.timestamp : DOMTimeStamp <span class="hljs-comment">// 取得からの時間[ms]</span>
+</div></code></pre>
+		<h4 id="positionerror-%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88">PositionError オブジェクト</h4>
+		<p>以下の子要素を持つ:</p>
+		<pre class="hljs"><code><div>.PositionError
+	.code : unsigned short <span class="hljs-comment">// エラーコード</span>
+	.message : DOMString <span class="hljs-comment">// エラー詳細(ユーザに見せる為のものではない)</span>
+</div></code></pre>
+		<h5 id="%E3%82%A8%E3%83%A9%E3%83%BC%E3%82%B3%E3%83%BC%E3%83%89">エラーコード</h5>
+		<ul>
+			<li>PERMISSION_DENIED
+				<ul>
+					<li>アクセス権がなくてエラー</li>
+				</ul>
+			</li>
+			<li>POSITION_UNAVAILABLE
+				<ul>
+					<li>内部的に取得できなくてエラー</li>
+				</ul>
+			</li>
+			<li>TIMEOUT
+				<ul>
+					<li>タイムアウトしてエラー</li>
+				</ul>
+			</li>
+		</ul>
+		<h3 id="%E5%AE%9A%E6%9C%9F%E7%9A%84%E3%81%AB%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B">定期的に取得する</h3>
+		<p>位置情報を監視するためには <code>watchPosition()</code> メソッドをを利用する。
+			このメソッドは watch ID を返却する。
+			この値は <code>clearWatch()</code> メソッドで、監視を停止するために利用される。
+			この機能もまた、<strong>HTTPS のみで利用できる</strong>。</p>
+		<h4 id="%E6%A7%8B%E6%96%87">構文</h4>
+		<pre class="hljs"><code><div>id = navigator.geolocation.watchPosition(success, error, opt);
+navigator.geolocation.clearWatch(id);
+</div></code></pre>
+		<h4 id="%E5%BC%95%E6%95%B0">引数</h4>
+		<p><code>watchPosition()</code> メソッドについては、上記 <code>getCurrentPosition()</code> メソッドと同様。</p>
+		<ul>
+			<li>id
+				<ul>
+					<li>監視を停止する watch ID。</li>
+				</ul>
+			</li>
+		</ul>
+		<h4 id="%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB">サンプル</h4>
+		<pre class="hljs"><code><div><span class="hljs-keyword">let</span> id, target, option;
+
+<span class="hljs-comment">// 取得に成功した時に呼び出される関数</span>
+<span class="hljs-keyword">let</span> success = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">pos</span>) </span>{
+	<span class="hljs-keyword">let</span> crd = pos.coords;
+
+	<span class="hljs-comment">// 目的地の座標と現在地の座標が等しかったら</span>
+	<span class="hljs-keyword">if</span> (target.latitude === crd.latitude &amp;&amp; target.longitude === crd.longitude) {
+		alert(<span class="hljs-string">'目的地ついたで'</span>);	<span class="hljs-comment">// ユーザに知らせて</span>
+		navigator.geolocation.clearWatch(id);	<span class="hljs-comment">// 監視を終了する</span>
+	}
+};
+
+<span class="hljs-comment">// エラーだった時の処理</span>
+<span class="hljs-keyword">let</span> error = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+	alert(<span class="hljs-string">`Error <span class="hljs-subst">${err.code}</span>: <span class="hljs-subst">${err.message}</span>`</span>);
+};
+
+<span class="hljs-comment">// ここに目的地の座標を入れる</span>
+target = {
+	<span class="hljs-attr">latitude</span> : <span class="hljs-number">0</span>,
+	<span class="hljs-attr">longitude</span>: <span class="hljs-number">0</span>,
+}
+
+<span class="hljs-comment">// オプションたち</span>
+options = {
+	<span class="hljs-attr">enableHighAccuracy</span>: <span class="hljs-literal">false</span>,
+	<span class="hljs-attr">timeout</span>: <span class="hljs-number">5000</span>,
+	<span class="hljs-attr">maximumAge</span>: <span class="hljs-number">0</span>
+};
+
+<span class="hljs-comment">// 監視を開始して watch ID を覚えておく</span>
+id = navigator.geolocation.watchPosition(success, error, options);
+</div></code></pre>
+		<h2 id="%E5%8F%82%E8%80%83%E8%B3%87%E6%96%99">参考資料</h2>
+		<ul>
+			<li><a href="https://w3c.github.io/geolocation-api/">Geolocation API 仕様</a></li>
+			<li><a href="https://developer.mozilla.org/docs/Web/API/Gamepad_API">Geolocation API MDN</a></li>
+			<li><a href="http://www.htmq.com/geolocation/">Geolocation API HTMQ</a></li>
+		</ul>
+
+	</body>
+
+</html>
