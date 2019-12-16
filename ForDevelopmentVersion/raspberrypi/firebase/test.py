@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import lora
+import pyrebase
 import ast
 import time
 import struct
@@ -8,6 +9,22 @@ import random
 import datetime
 lr = lora.LoRa()
 path = './sensedata.txt'
+timeout = 1
+
+config = {
+    "apiKey": "AIzaSyAI2_HPjp6941-xfZ6FQ3qRZMUICy0ni4I",
+    "authDomain": "test01-fc911.firebaseapp.com",
+    "databaseURL": "https://test01-fc911.firebaseio.com",
+    "projectId": "test01-fc911",
+    "storageBucket": "test01-fc911.appspot.com",
+    "messagingSenderId": "774709465749",
+    "appId": "1:774709465749:web:e5383bd9b3006fd5af419c",
+    "measurementId": "G-MXPFLT1F3J"
+}
+
+firebase = pyrebase.initialize_app(config)
+
+db = firebase.database()
 
 def printable(l):
     x = struct.unpack(str(len(l)) + 'b', l)
@@ -99,15 +116,16 @@ def GateCommand(level):
     LoRaMessenger('gate %d' % level)
     lr.s.flush()
     num = 0
-    while num < level:
-        line = lr.readline()
-        if 'Gate Complete nowLv : %d' % level in printable(line):
-            print('Success')
-            return True
-        num = num + 1
-        time.sleep(0.1)
-    print('Failed')
-    return False
+    #while num < level:
+    #    line = lr.readline()
+    #    if 'Gate Complete nowLv : %d' % level in printable(line):
+    #        print('Success')
+    #        return True
+    #    num = num + 1
+    #    time.sleep(0.1)
+    #print('Failed')
+    #return False
+    return True
 
 def LEDCommandwithDir(dir, level):
     LoRaMessenger('Dev%d:led %d' %(dir, level))
@@ -119,6 +137,8 @@ def GateCommandwithDir(dir, level):
 
 setMode(4, 7)
 
+lastgate = 0
+
 while True:
     #send = input('send : ')
     #LoRaMessenger(send)
@@ -128,8 +148,14 @@ while True:
     
     #if 'reset' in send:
     #    lr.reset()
+   
+    gatenum = db.child("home/gate").get()
+
+    if(lastgate != int(gatenum.val())):
+        lastgate = int(gatenum.val())
+        GateCommand(lastgate)
     
-    line = lr.readline()
+    line = lr.readline(timeout)
     lr.s.flush()
     print('%s' % line)
     sys.stdout.flush()
