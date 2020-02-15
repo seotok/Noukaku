@@ -20,6 +20,6 @@
     - [ESP32](./ForReleaseVersion/ESP32)                           (ESP32用)
     - [Gateway](./ForReleaseVersion/Gateway)                      (Raspberry Pi など中継器用)
     - [Server](./ForReleaseVersion/Server)                          (サーバ用)
-- [ForDevTeamInstructions](./ForDevTeamInstructions) (開発チーム向けの説明など)
+- [ForDevTeamIntroductions](./ForDevTeamIntroductions) (開発チーム向けの説明など)
 
 
