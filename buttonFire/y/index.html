@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"><!--ファイヤーベース設定-->
+    <title>Firebase Led</title>
+
+    <!-- ファイヤーベース設定Latest compiled and minified CSS firebase-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+              integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+              crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      // Cambiar por sus credenciales
+      var config = {
+        apiKey: "AIzaSyDVGN1ZL4KAWsWtvr9lb-YbRW1Oc3OSrok",
+        authDomain: "buttonsanmple.firebaseapp.com",
+        databaseURL: "https://buttonsanmple.firebaseio.com",
+      //  projectId: "buttonsanmple",
+        storageBucket: "buttonsanmple.appspot.com",
+        messagingSenderId: "103478831366",
+        //appId:"1:103478831366:web:c44c15961dd2dcbbab1687",
+    measurementId: "G-YQTQE6QJ9L"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+      <script>
+  /*    $(function(){
+          $('.btn').on('click', function(event){
+              event.preventDefault();
+              $(this).toggleClass('active');
+          });
+      });
+      $(function(){
+          $('.search').on('click', function(event){
+              event.preventDefault();
+              $(this).toggleClass('active');
+          });
+      });
+      $(function(){
+          $('.fun').on('click', function(event){
+              event.preventDefault();
+              $(this).toggleClass('active');
+          });
+      }); */
+      </script>
+
+
+    </head>
+  <body>
+
+    <!--ファイヤーベース-->
+<br>
+<br>
+<br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-success">
+          <div class="panel-heading">Firebase Led</div>
+          <div class="panel-body">
+             <div class="checkbox">
+               <label>
+                <input type="checkbox" id="checkLed1">LED 1
+              </label>
+
+              <div class="checkbox">
+               <label>
+                <input type="checkbox" id="checkLed2">LED 2
+              </label>
+
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+/*
+//  Esqueleto de la BD
+  var db = firebase.database().ref('home').set({
+    led1:true,
+    led2:true
+  });
+*/
+
+var db = firebase.database().ref('home');
+
+// último estado
+
+db.on('value', function(data){
+
+   console.log("data: ", data.val());
+   $("#checkLed1").prop('checked', data.val().led1);
+   $("#checkLed2").prop('checked', data.val().led2);
+
+});
+
+
+$("#checkLed1").click(function(){
+  var estado = $(this).is(':checked');
+
+  db.update({
+    led1:estado
+  });
+
+});
+
+$("#checkLed2").click(function(){
+  var estado = $(this).is(':checked');
+
+  db.update({
+    led2:estado
+  });
+
+});
+
+  </script>
+  <div class="hidden_box">
+      <input type="checkbox" id="label1" />
+      <label for="label1">1</label>
+      <div class="hidden_show">
+        <!--非表示ここから-->
+        <a class="btn 0"href="#">0</a>
+          <a class="btn 1"href="#">4</a>
+            <a class="btn 2"href="#">8</a>
+              <a class="btn 3"href="#">12</a>
+                <a class="btn 4"href="#">16</a>
+<script>
+
+  $(function() {
+    $('.btn').on('click',function (event) {
+      $('.btn').removeClass('active');
+      event.preventDefault();
+
+      $(this).toggleClass('active');
+          });
+      });
+
+</script>
+
+        <!--ここまで-->
+      </div>
+  </div>
+  <div class="hidden_box">
+      <input type="checkbox" id="label2" />
+      <label for="label2">2</label>
+      <div class="hidden_show">
+        <!--非表示ここから-->
+        <a class="btn 0"href="#">0</a>
+        <a class="btn 1"href="#">4</a>
+        <a class="btn 2"href="#">8</a>
+        <a class="btn 3"href="#">12</a>
+        <a class="btn 4"href="#">16</a>
+<br></br>
+        <button class="send"href="#" id="sending">送信  </button>
+
+
+<script>
+
+  $(function() {
+    $('.btn').on('click',function (event) {
+      $('.btn').removeClass('active');
+      event.preventDefault();
+
+      $(this).toggleClass('active');
+          });
+      });
+
+      $(function () {
+        $("#sending").click(function () {
+            $("#sending").addClass("onclick", 250, validate);
+        });
+
+    function validate() {
+        setTimeout(function () {
+            $("#sending").removeClass("onclick");
+            $("#sending").addClass("validate", 450, callback);
+        }, 2250);
+    }
+    function callback() {
+        setTimeout(function () {
+            $("#sending").removeClass("validate");
+        }, 1250);
+    }
+     });
+
+</script>
+
+        <!--ここまで-->
+      </div>
+  </div>
+
+
+<!--
+  <a class="btn b" href="#">
+            <span>13</span>
+            <span>13</span>
+
+        <a class="btn b" href="#">
+            <span>14</span>
+            <span>14</span>
+
+        <a class="btn b" href="#">
+            <span>15</span>
+            <span>15</span>
+
+        <a class="btn b" href="#">
+            <span>16</span>
+            <span>16</span>
+
+        <a class="search" href="#">
+            <span>再検索</span>
+            <span>再検索</span>
+
+
+        <a class="fun" href="#">
+            <span>メニュー</span>
+            <span>メニュー</span>
+
+        <a class="fun" href="#">
+            <span>近くで</span>
+            <span>近くで</span>
+
+        <a class="fun" href="#">
+            <span>地図から</span>
+            <span>地図から</span>
+-->
+        </a>
+  </body>
+</html>
