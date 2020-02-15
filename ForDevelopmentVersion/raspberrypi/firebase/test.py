@@ -158,6 +158,10 @@ while True:
     line = lr.readline(timeout)
     lr.s.flush()
     print('%s' % line)
+    if 'Gate Complete nowLv :'in printable(line):
+        db.child("home").update({"done1":True})
+        #print("true")
+
     sys.stdout.flush()
     DataWrite(line)
     #print("Hey!")
