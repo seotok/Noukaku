@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Firebase Led</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+  <style>
+
+    .marquee {
+      width: 600px;
+      padding: 0.5em 0;
+      overflow: hidden;
+      background-color: #f6f6f6;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+      .marquee p:after {
+        content: "";
+        white-space: nowrap;
+        padding-right: 50px;
+      }
+
+      .marquee p {
+        margin: 0;
+        padding-left: 600px;
+        display: inline-block;
+        white-space: nowrap;
+        -webkit-animation-name: marquee;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-duration: 10s;
+        -webkit-animation-iteration-count: infinite;
+        -moz-animation-name: marquee;
+        -moz-animation-timing-function: linear;
+        -moz-animation-duration: 10s;
+        -moz-animation-iteration-count: infinite;
+        -ms-animation-name: marquee;
+        -ms-animation-timing-function: linear;
+        -ms-animation-duration: 10s;
+        -ms-animation-iteration-count: infinite;
+        -o-animation-name: marquee;
+        -o-animation-timing-function: linear;
+        -o-animation-duration: 10s;
+        -o-animation-iteration-count: infinite;
+        animation-name: marquee;
+        animation-timing-function: linear;
+        animation-duration: 10s;
+        animation-iteration-count: infinite;
+      }
+
+    @-webkit-keyframes marquee {
+      from {
+        -webkit-transform: translate(0%);
+      }
+
+      99%,to {
+        -webkit-transform: translate(-100%);
+      }
+    }
+
+    @-moz-keyframes marquee {
+      from {
+        -moz-transform: translate(0%);
+      }
+
+      99%,to {
+        -moz-transform: translate(-100%);
+      }
+    }
+
+    @-ms-keyframes marquee {
+      from {
+        -ms-transform: translate(0%);
+      }
+
+      99%,to {
+        -ms-transform: translate(-100%);
+      }
+    }
+
+    @-o-keyframes marquee {
+      from {
+        -o-transform: translate(0%);
+      }
+
+      99%,to {
+        -o-transform: translate(-100%);
+      }
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translate(0%);
+      }
+
+      99%,to {
+        transform: translate(-100%);
+      }
+    }
+  </style>
+  <script>
+    // Initialize Firebase
+    // Cambiar por sus credenciales
+    var config = {
+      apiKey: "AIzaSyAI2_HPjp6941-xfZ6FQ3qRZMUICy0ni4I",
+      authDomain: "test01-fc911.firebaseapp.com",
+      databaseURL: "https://test01-fc911.firebaseio.com",
+      projectId: "test01-fc911",
+      storageBucket: "test01-fc911.appspot.com",
+      messagingSenderId: "774709465749",
+      appId: "1:774709465749:web:e5383bd9b3006fd5af419c",
+      measurementId: "G-MXPFLT1F3J"
+    };
+    firebase.initializeApp(config);
+  </script>
+</head>
+<body>
+  <div class="marquee">
+    <p id="notice"></p>
+  </div>
+  <br>
+  <br>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-success">
+          <div class="panel-heading">Firebase Led</div>
+          <div class="panel-body">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" id="checkLed1">LED 1
+              </label>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="checkLed2">LED 2
+                </label>
+
+                <br>水位2号</br>
+                <form id="gate">
+                  <label>
+                    <input type="radio" name="level" value=0>0
+                    <input type="radio" name="level" value=4>4
+                    <input type="radio" name="level" value=8>8
+                    <input type="radio" name="level" value=12>12
+                    <input type="radio" name="level" value=16>16
+                  </label>
+                </form>
+                <div class="button">
+                  <label>
+                    <input type="button" name="送信" onclick="submitscript('gate')">送信
+                </div>
+
+                <br>水位3号</br>
+                <form id="gate2">
+                  <label>
+                    <input type="radio" name="level" value=0>0
+                    <input type="radio" name="level" value=4>4
+                    <input type="radio" name="level" value=8>8
+                    <input type="radio" name="level" value=12>12
+                    <input type="radio" name="level" value=16>16
+                  </label>
+                </form>
+                <div class="button">
+                  <label>
+                    <input type="button" name="送信" onclick="submitscript('gate2')">送信
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+
+        var updata = {};
+
+        /*
+          Esqueleto de la BD
+          var db = firebase.database().ref('home').set({
+            led1:true,
+            led2:true,
+            gate:0,
+            done1:false
+          });
+        */
+
+        var db = firebase.database().ref('home');
+
+        /* último estado */
+        db.on('value', function (data) {
+          console.log("data: ", data.val());
+          $("#checkLed1").prop('checked', data.val().led1);
+          $("#checkLed2").prop('checked', data.val().led2);
+          /*$("#gatenum").prop('checked', data.val().gate);*/
+
+          var noticetext = "完了した端末 :";
+          if (data.val().done1 || data.val().done2) {
+            if (data.val().done1) noticetext += " 2";
+            if (data.val().done2) noticetext += " 3";
+            //alert(noticetext);
+            document.getElementById("notice").innerHTML = noticetext;
+          } else {
+            document.getElementById("notice").innerHTML = "";
+          }
+        });
+
+        $("#checkLed1").click(function () {
+          var estado = $(this).is(':checked');
+          db.update({
+            led1: estado
+          });
+        });
+        $("#checkLed2").click(function () {
+          var estado = $(this).is(':checked');
+          db.update({
+            led2: estado
+          });
+        });
+
+        function submitscript(gateName) {
+          var lev = document.getElementById(gateName).level.value;
+          updata[gateName] = lev;
+          updata[gateName + "Processing"] = true;
+          db.update(updata);
+        }
+
+        //function noticescript(){
+        //}
+        /*
+        function cleardone() {
+          db.update({
+            done1: false,
+            done2: false
+          });
+        }
+
+        //setInterval('noticescript()',1000);
+        setInterval('cleardone()', 30000);
+        */
+      </script>
+
+</body>
+</html>
