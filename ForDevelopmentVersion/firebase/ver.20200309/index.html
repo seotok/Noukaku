@@ -141,21 +141,6 @@
                 </label>
 
                 <br>水位2号</br>
-                <form id="gate">
-                  <label>
-                    <input type="radio" name="level" value=0>0
-                    <input type="radio" name="level" value=4>4
-                    <input type="radio" name="level" value=8>8
-                    <input type="radio" name="level" value=12>12
-                    <input type="radio" name="level" value=16>16
-                  </label>
-                </form>
-                <div class="button">
-                  <label>
-                    <input type="button" name="送信" onclick="submitscript('gate')">送信
-                </div>
-
-                <br>水位3号</br>
                 <form id="gate2">
                   <label>
                     <input type="radio" name="level" value=0>0
@@ -169,14 +154,27 @@
                   <label>
                     <input type="button" name="送信" onclick="submitscript('gate2')">送信
                 </div>
+
+                <br>水位3号</br>
+                <form id="gate3">
+                  <label>
+                    <input type="radio" name="level" value=0>0
+                    <input type="radio" name="level" value=4>4
+                    <input type="radio" name="level" value=8>8
+                    <input type="radio" name="level" value=12>12
+                    <input type="radio" name="level" value=16>16
+                  </label>
+                </form>
+                <div class="button">
+                  <label>
+                    <input type="button" name="送信" onclick="submitscript('gate3')">送信
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <script>
-
-        var updata = {};
 
         /*
           Esqueleto de la BD
@@ -223,6 +221,7 @@
 
         function submitscript(gateName) {
           var lev = document.getElementById(gateName).level.value;
+          var updata = {};
           updata[gateName] = lev;
           updata[gateName + "Processing"] = true;
           db.update(updata);
