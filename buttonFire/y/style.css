@@ -1,0 +1,228 @@
+/*全体*/
+.hidden_box {
+    margin: 2em 0;
+    padding: 0;
+}
+
+/*ボタン装飾*/
+.hidden_box label {
+    padding: 15px;
+    font-weight: bold;
+    background: #efefef;
+    border-radius: 5px;
+    cursor :pointer;
+    transition: .5s;
+}
+
+/*アイコンを表示*/
+.hidden_box label:before {
+    display: inline-block;
+    content: '\f078';
+    font-family: 'FontAwesome';
+    padding-right: 5px;
+    transition: 0.2s;
+}
+
+/*ボタンホバー時*/
+.hidden_box label:hover {
+    background: silver;
+}
+
+/*アイコンを切り替え*/
+.hidden_box input:checked + label:before {
+     content: '\f00d';
+     -ms-transform: rotate(360deg);
+     -webkit-transform: rotate(360deg);
+     transform: rotate(360deg);
+     color: #668ad8;
+}
+
+/*チェックは見えなくする*/
+.hidden_box input {
+    display: none;
+}
+
+/*中身を非表示にしておく*/
+.hidden_box .hidden_show {
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: 0.8s;
+}
+
+/*クリックで中身表示*/
+.hidden_box input:checked + label + .hidden_show {
+    padding: 10px 0;
+    height: auto;
+    opacity: 1;
+}
+
+
+
+/*ボタン装飾*/
+.hidden_box labe2 {
+    padding: 15px;
+    font-weight: bold;
+    background: #efefef;
+    border-radius: 5px;
+    cursor :pointer;
+    transition: .5s;
+}
+
+/*アイコンを表示*/
+.hidden_box labe2:before {
+    display: inline-block;
+    content: '\f078';
+    font-family: 'FontAwesome';
+    padding-right: 5px;
+    transition: 0.2s;
+}
+
+/*ボタンホバー時*/
+.hidden_box labe2:hover {
+    background: silver;
+}
+
+/*アイコンを切り替え*/
+.hidden_box input:checked + labe2:before {
+     content: '\f00d';
+     -ms-transform: rotate(360deg);
+     -webkit-transform: rotate(360deg);
+     transform: rotate(360deg);
+     color: #668ad8;
+}
+
+
+
+
+
+/*クリックで中身表示*/
+.hidden_box input:checked + labe2 + .hidden_show {
+    padding: 10px 0;
+    height: auto;
+    opacity: 1;
+}
+
+
+/*水位調整*/
+.btn{
+  display: inline-block;
+  text-decoration: none;
+  background: #ffffff;
+  color: #000000;
+  font-size: 6vw;
+  width: 8vw;
+  height: 8vw;
+  line-height: 8vw;
+  border-radius: 100%;
+  border: solid 1px #000000;
+  padding: 0px;
+/*  text-align: center;*/
+  overflow: hidden;
+  transition: .4s;
+}
+
+.btn.active{
+  background: #add8e6;
+    border: solid 3px #000000;
+}
+
+
+
+/*送信ボタン*/
+
+
+.send {
+    margin-left: 20px;
+    margin-top: 40px;
+    width: 130px;
+    height: 90px;
+    text-align: center;
+}
+
+button {
+    outline: none;
+    height: 90px;
+    text-align: center;
+    width: 180px;
+    border-radius: 50px;
+    background: #ffffff;
+    border: 2px solid #ffa500;
+    color: #000000;
+    letter-spacing: 1px;
+    text-shadow: 0;
+    font-size: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+
+    button:hover {
+        color: white;
+        background: #ffff00;
+    }
+
+    button:active {
+        letter-spacing: 2px;
+
+    }
+
+    button:after {
+        /*content: "";*/
+    }
+
+.onclick {
+    width: 90px;
+    border-color: #bbbbbb;
+    border-width: 3px;
+    font-size: 0;
+    border-left-color: #ffff00;
+    -webkit-animation: rotating 2s 0.25s linear infinite;
+    animation: rotating 2s 0.25s linear infinite;
+}
+
+    .onclick:after {
+        content: "";
+    }
+
+    .onclick:hover {
+        color: #ffff00;
+        background: white;
+    }
+
+.validate {
+    font-size: 40px;
+    color: white;
+    background: #ffff00;
+}
+
+    .validate:after {
+        font-family: "FontAwesome";
+        content: "\f00c";
+    }
+
+@-webkit-keyframes rotating {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotating {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
