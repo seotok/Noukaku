@@ -82,7 +82,7 @@
   <script>
     var db = firebase.database().ref('home');  // 試験用RealTimeDatabase領域へアクセスするためのやつ
     var userID;  // ログインユーザーのIDを保存する変数
-    var usersDB;  // ログインユーザーのRealTimeDatabase領域へアクセスするためのやつ
+    //var usersDB;  // ログインユーザーのRealTimeDatabase領域へアクセスするためのやつ
 
     firebase.auth().onAuthStateChanged(function (user) {
       // ログイン処理 authの初期化が終わるまでユーザーIDの取得やデータベースへのアクセスができないことに注意
@@ -90,7 +90,7 @@
         userID = user.uid;  // ユーザーIDの取得
         userName = user.displayName;  // ユーザー名の取得
         document.getElementById("yourname").innerHTML = userName + "のparent1";
-        usersDB = firebase.database().ref('users/' + userID);  // データベースへのアクセスを取得
+       // usersDB = firebase.database().ref('users/' + userID);  // データベースへのアクセスを取得
         console.log("login success : " + userID);
         // ...
       } else {  // ログイン失敗時
@@ -117,11 +117,10 @@
     function databaseWrite(parentName, childName) {
       var lev = document.getElementById(childName).level.value;
       var updata = {};
-      updata[parentName] = {};
-      updata[parentName][childName] = {};
-      updata[parentName][childName]["level"] = lev;
-      updata[parentName][childName]["processing"] = true;
-      usersDB.update(updata);
+      updata["level"] = Number(lev);
+      updata["processing"] = true;
+      console.log('users/' + userID + '/' + parentName + '/' + childName + '/', updata);
+      firebase.database().ref('users/' + userID + '/' + parentName + '/' + childName + '/').update(updata);
     };
 
   </script>
