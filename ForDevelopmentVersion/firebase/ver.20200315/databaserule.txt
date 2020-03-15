@@ -18,18 +18,18 @@
           "$children":
           {
             ".read" : "auth.uid === $uid",
-            ".validate" : "newData.hasChildren(['level','Processing'])",
+            ".validate" : "newData.hasChildren(['level','processing'])",
             "level":
             {
               ".write" : "auth.uid === $uid",
               ".validate" : "newData.isNumber() && newData.val() >= 0",
               ".indexOn": ["level"],
             },
-            "Processing":
+            "processing":
             {
               ".write" : "auth.uid === $uid",
               ".validate" : "newData.isBoolean()",
-              ".indexOn": ["Processing"]
+              ".indexOn": ["processing"]
             },
             "$other": { ".validate": false }
           }

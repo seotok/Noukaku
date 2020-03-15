@@ -110,7 +110,7 @@
       var lev = document.getElementById(gateName).level.value;
       var updata = {};
       updata[gateName] = lev;
-      updata[gateName + "Processing"] = true;
+      updata[gateName + "processing"] = true;
       db.update(updata);
     };
 
@@ -120,7 +120,7 @@
       updata[parentName] = {};
       updata[parentName][childName] = {};
       updata[parentName][childName]["level"] = lev;
-      updata[parentName][childName]["Processing"] = true;
+      updata[parentName][childName]["processing"] = true;
       usersDB.update(updata);
     };
 
