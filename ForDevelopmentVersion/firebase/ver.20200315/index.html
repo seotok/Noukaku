@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>*Beta* Gate Level Controller</title>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+
+  <!-- firebase のjsファイル -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+
+  <script>
+    // firebase の 初期化
+    var config = {
+      apiKey: "AIzaSyAI2_HPjp6941-xfZ6FQ3qRZMUICy0ni4I",
+      authDomain: "test01-fc911.firebaseapp.com",
+      databaseURL: "https://test01-fc911.firebaseio.com",
+      projectId: "test01-fc911",
+      storageBucket: "test01-fc911.appspot.com",
+      messagingSenderId: "774709465749",
+      appId: "1:774709465749:web:e5383bd9b3006fd5af419c",
+      measurementId: "G-MXPFLT1F3J"
+    };
+    firebase.initializeApp(config);
+  </script>
+</head>
+
+<body>
+  <h1>水位調整ページ</h1>
+  <div>水位2号</div>
+  <form id="gate2">
+    <label>
+      <input type="radio" name="level" value=0>0
+      <input type="radio" name="level" value=4>4
+      <input type="radio" name="level" value=8>8
+      <input type="radio" name="level" value=12>12
+      <input type="radio" name="level" value=16>16
+    </label>
+  </form>
+  <div class="button">
+     <input type="button" name="送信" onclick="submitscript('gate2')">送信
+  </div>
+
+  <br />水位3号
+  <form id="gate3">
+    <label>
+      <input type="radio" name="level" value=0>0
+      <input type="radio" name="level" value=4>4
+      <input type="radio" name="level" value=8>8
+      <input type="radio" name="level" value=12>12
+      <input type="radio" name="level" value=16>16
+    </label>
+  </form>
+  <div class="button">
+     <input type="button" name="送信" onclick="submitscript('gate3')">送信
+  </div>
+
+  <br />
+  <h3>以下ログインしたユーザー専用</h3>
+  <div id="yourname">あなたはログインしていません。ログインは<a href="./login.html">こちら</a>から。</div>
+  <div>child1</div>
+  <form id="child1">
+    <label>
+      <input type="radio" name="level" value=0>0
+      <input type="radio" name="level" value=4>4
+      <input type="radio" name="level" value=8>8
+      <input type="radio" name="level" value=12>12
+      <input type="radio" name="level" value=16>16
+    </label>
+  </form>
+  <div class="button">
+    <input type="button" name="送信" onclick="databaseWrite('parent1','child1')">送信
+  </div>
+
+  <br />ログイン機能にはクッキーを使用しています。正常に機能しない場合は、クッキーを許可してください。
+
+  <script>
+    var db = firebase.database().ref('home');  // 試験用RealTimeDatabase領域へアクセスするためのやつ
+    var userID;  // ログインユーザーのIDを保存する変数
+    var usersDB;  // ログインユーザーのRealTimeDatabase領域へアクセスするためのやつ
+
+    firebase.auth().onAuthStateChanged(function (user) {
+      // ログイン処理 authの初期化が終わるまでユーザーIDの取得やデータベースへのアクセスができないことに注意
+      if (user) {  // ログイン成功時
+        userID = user.uid;  // ユーザーIDの取得
+        userName = user.displayName;  // ユーザー名の取得
+        document.getElementById("yourname").innerHTML = userName + "のparent1";
+        usersDB = firebase.database().ref('users/' + userID);  // データベースへのアクセスを取得
+        console.log("login success : " + userID);
+        // ...
+      } else {  // ログイン失敗時
+        console.log("login failed");
+      }
+      // ...
+    });
+
+    //console.log("userID : " + userID);  // authの初期化が終わるまでuserIDはundefinedであることに注意
+
+    // RealTimeDatabaseに変更があった際にログ出力
+    db.on('value', function (data) {  
+      console.log("data : ", data.val());
+    });
+
+    function submitscript(gateName) {  // home領域へ書き込み
+      var lev = document.getElementById(gateName).level.value;
+      var updata = {};
+      updata[gateName] = lev;
+      updata[gateName + "Processing"] = true;
+      db.update(updata);
+    };
+
+    function databaseWrite(parentName, childName) {
+      var lev = document.getElementById(childName).level.value;
+      var updata = {};
+      updata[parentName] = {};
+      updata[parentName][childName] = {};
+      updata[parentName][childName]["level"] = lev;
+      updata[parentName][childName]["Processing"] = true;
+      usersDB.update(updata);
+    };
+
+  </script>
+</body>
+</html>

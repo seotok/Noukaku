@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>*Beta* Login Page - GateLevelController</title>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth__ja.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.5.0/firebase-ui-auth.css" />
+
+  <script>
+    // Initialize Firebase  firebaseの初期化
+    var config = {
+      apiKey: "AIzaSyAI2_HPjp6941-xfZ6FQ3qRZMUICy0ni4I",
+      authDomain: "test01-fc911.firebaseapp.com",
+      databaseURL: "https://test01-fc911.firebaseio.com",
+      projectId: "test01-fc911",
+      storageBucket: "test01-fc911.appspot.com",
+      messagingSenderId: "774709465749",
+      appId: "1:774709465749:web:e5383bd9b3006fd5af419c",
+      measurementId: "G-MXPFLT1F3J"
+    };
+    firebase.initializeApp(config);
+
+
+
+  </script>
+</head>
+<body>
+  <h1>Gate Level Controller へログイン</h1>
+  <div id="firebaseui-auth-container"></div>
+  <div id="loader">ログイン機能にはクッキーを使用しています。正常に機能しない場合は、このページと https://www.accountchooser.com/ https://ssl.gstatic.com/ のクッキーを許可してください。</div>
+
+  <script>
+    // Initialize the FirebaseUI Widget using Firebase.
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    var uiConfig = {
+      /*callbacks: {
+        signInSuccessWithAuthResult: function (authResult, redirectUrl) {
+          // User successfully signed in.
+          // Return type determines whether we continue the redirect automatically
+          // or whether we leave that to developer to handle.
+          return true;
+        },
+        uiShown: function () {
+          // The widget is rendered.
+          // Hide the loader.
+          document.getElementById('loader').style.display = 'none';
+        }
+      },*/
+      // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+      //signInFlow: 'popup',
+      signInSuccessUrl: './index.html',  // ログイン成功時の遷移先
+      signInOptions: [
+        {
+          provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,  // メールとパスワードによる認証
+          requireDisplayName: true,  // ユーザーに表示名の入力を求める
+          //signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD  // メールリンク認証
+        },
+        // Leave the lines as is for the providers you want to offer your users.
+        //firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        //firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+        //firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        //firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        //firebase.auth.PhoneAuthProvider.PROVIDER_ID
+      ],
+      // Terms of service url.
+      //tosUrl: '<your-tos-url>',  // 利用規約URL
+      // Privacy policy url.
+      //privacyPolicyUrl: '<your-privacy-policy-url>'  // プライバシーポリシーURL
+
+    }
+    ui.start('#firebaseui-auth-container', uiConfig);
+  </script>
+</body>
+</html>
