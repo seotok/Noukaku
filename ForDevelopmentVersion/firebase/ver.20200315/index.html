@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>*Beta* Gate Level Controller</title>
 
+  <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
           integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
           crossorigin="anonymous"></script>
@@ -37,8 +38,8 @@
   <!-- 水位操作部分 各水位のボタンをformタグ内に入れ、formタグにはidをつけること -->
   <form id="gate2">
     <label>
-      <input type="radio" name="level" value=0>0
-      <input type="radio" name="level" value=4>4
+      <input type="radio" name="level" value=0>0  <!-- 左記のvalueの値が下の関数呼び出し時に渡される。-->
+      <input type="radio" name="level" value=4>4  <!-- ボタンを押すと上のformのidにvalueの値が渡されるイメージ? -->
       <input type="radio" name="level" value=8>8
       <input type="radio" name="level" value=12>12
       <input type="radio" name="level" value=16>16
