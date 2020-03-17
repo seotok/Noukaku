@@ -106,7 +106,7 @@
       console.log("data : ", data.val());
     });
 
-    function submitscript(gateName) {  // home領域へ書き込み
+    function submitscript(gateName) {  // home領域へ書き込み  gateName : 水位ボタンの含まれるformのidであること
       var lev = document.getElementById(gateName).level.value;
       var updata = {};
       updata[gateName] = lev;
@@ -114,7 +114,8 @@
       db.update(updata);
     };
 
-    function databaseWrite(parentName, childName) {
+    function databaseWrite(parentName, childName) {  // parentName : 親機の名前  childName : 子機の名前 これはformのidである必要がある
+      // 各ユーザの領域への書き込み
       var lev = document.getElementById(childName).level.value;
       var updata = {};
       updata["level"] = Number(lev);
