@@ -46,7 +46,7 @@
     </label>
   </form>
 
-  <div class="button"> <!-- 送信時に関数を呼び出す。引数には上記formタグのidを渡す。これが水門の名前に当たる -->
+  <div class="button"> <!-- 送信時に関数を呼び出す。引数には上記formタグのidを渡す。水位がデータベースのこの名前の箇所に書き込まれる -->
      <input type="button" name="送信" onclick="submitscript('gate2')">送信
   </div>
 
@@ -130,6 +130,20 @@
       console.log('users/' + userID + '/' + parentName + '/' + childName + '/', updata);
       firebase.database().ref('users/' + userID + '/' + parentName + '/' + childName + '/').update(updata);
     };
+
+    /*
+     * データ構造はこんな感じ
+     * users
+     * |
+     * +-{userID}
+     *     |
+     *     +-{parentName}
+     *         |
+     *         +-{childName}
+     *             |
+     *             +-level
+     *             +-processing
+     * /
 
   </script>
 </body>
