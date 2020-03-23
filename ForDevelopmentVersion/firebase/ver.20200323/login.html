@@ -34,8 +34,9 @@
 <body>
   <h1>Gate Level Controller へログイン</h1>
   <div id="firebaseui-auth-container"></div>
+  <!--
   <div id="loader">ログイン機能にはクッキーを使用しています。正常に機能しない場合は、このページと https://www.accountchooser.com/ https://ssl.gstatic.com/ のクッキーを許可してください。</div>
-
+    -->
   <script>
     // Initialize the FirebaseUI Widget using Firebase.
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -63,7 +64,7 @@
           //signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD  // メールリンク認証
         },
         // Leave the lines as is for the providers you want to offer your users.
-        //firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         //firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         //firebase.auth.TwitterAuthProvider.PROVIDER_ID,
         //firebase.auth.GithubAuthProvider.PROVIDER_ID,
