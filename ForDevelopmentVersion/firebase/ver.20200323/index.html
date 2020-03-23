@@ -96,7 +96,7 @@
       if (user) {  // ログイン成功時
         userID = user.uid;  // ユーザーIDの取得
         userName = user.displayName;  // ユーザー名の取得
-        document.getElementById("yourname").innerHTML = userName + "のparent1";
+        document.getElementById("yourname").innerHTML = userName + "のparent1  ユーザー切り替えは<a href='./login.html'>こちら</a>から";
        // usersDB = firebase.database().ref('users/' + userID);  // データベースへのアクセスを取得
         console.log("login success : " + userID);
         // ...
