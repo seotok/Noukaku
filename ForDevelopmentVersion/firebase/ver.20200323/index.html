@@ -83,9 +83,9 @@
   <!-- 送信時に呼び出す関数は下記のとおり。第一引数には親機の名前、第二引数には上記のformのid（子機の名前）-->
     <input type="button" name="送信" onclick="databaseWrite('parent1','child1')">送信
   </div>
-
+  <!--
   <br />ログイン機能にはクッキーを使用しています。正常に機能しない場合は、クッキーを許可してください。
-
+    -->
   <script>
     var db = firebase.database().ref('home');  // 試験用RealTimeDatabase領域へアクセスするためのやつ
     var userID;  // ログインユーザーのIDを保存する変数
