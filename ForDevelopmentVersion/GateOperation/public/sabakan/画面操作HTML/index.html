@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="robots" content="index, follow">
+		<!-- Twitter用 -->
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="@KusaReMKN">
+		<meta name="twitter:image" content="http://www.kusaremkn.tk/img/MKNIcon.gif">
+		<meta name="twitter:description" content="鯖缶テスト">
+		<meta name="og:url" content="http://www.kusaremkn.tk/sabakan/">
+		<meta name="og:title" content="鯖缶">
+		<meta name="og:description" content="鯖缶テスト">
+		<meta name="og:image" content="http://www.kusaremkn.tk/img/MKNIcon.gif">
+		<!-- 文書情報 -->
+		<title>蜜柑箱</title>
+		<meta name="description" content="鯖缶">
+		<meta name="keywords" content="腐れ蜜柑, KusaReMKN, 🍊, 蜜柑箱">
+		<meta name="author" content="KusaReMKN">
+		<!-- 視覚効果 -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="/css/common.css" type="text/css">
+		<link rel="icon" type="image/gif" href="/img/MKNIcon.gif" sizes="400x400">
+		<link rel="apple-touch-icon" type="image/gif" href="/img/MKNIcon.gif">
+		<script src="/js/footer.js" async defer></script><!-- フッターにあるリンクたちの登録 -->
+		<script src="/js/counter.js" async defer></script><!-- カウンタ読み込みが遅いのであとから追加する -->
+		<script src="/js/link.js" async defer></script><!-- 外部リンクにマークを付ける -->
+		<script src="./sabakan.js" async defer></script>
+	</head>
+
+	<body>
+		<header>
+			<h1>鯖缶</h1>
+			<small>Copyright © 2019 KusaReMKN. All rights reserved.</small>
+		</header>
+		<p>
+			ボタンを押すととりあえず下に位置情報 {緯度 経度} が表示されるよ
+		</p>
+		<p>
+			これが正しく動作するためには、これらのファイルが https の通信で提供されなければなりません。
+			これは、geolocation の仕様によるものです。
+			http を利用した通信でも動作する可能性がありますが、精度が悪い恐れがあり、望んだ結果は得られないでしょう。
+			そのために、配置する WEB サーバを適切に構成する必要があります。
+			もしくは、これらをローカルファイルとして扱う必要があります。
+		</p>
+		<input type="button" onclick="sabakan();" value="やるぜ"><Br>
+		<span id="SabakanOutput" style="text-align: center;">[ここ]</span>
+	</body>
+
+</html>

@@ -1,0 +1,364 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"><!--ファイヤーベース設定-->
+    <title>Controler</title>
+    <!--マップ読み込み
+        <iframe src="./sabakan/index.html" width="100%" height="100%"></iframe>
+    -->
+    <!--マップ設定-->
+    <meta name="description" content="水煮なのか味噌煮なのかと訊かれたら味噌煮。いろんな場所にピンを立ててどこが一番近いのか調べたりする。">
+    <meta name="keywords" content="腐れ蜜柑, KusaReMKN, 🍊, 蜜柑箱, co2, 二酸化炭素, 鯖缶, Sabakan">
+
+    <!--マップ視覚効果-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/gif" href="/img/MKNIcon.gif" sizes="400x400">
+    <link rel="apple-touch-icon" type="image/gif" href="/img/MKNIcon.gif">
+    <link href="./css/common.css" type="text/css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&language=ja" async defer></script>
+    <script src="public\sabakan\js\map.js" async defer></script>
+
+    <!-- ファイヤーベース設定Latest compiled and minified CSS firebase-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        // Cambiar por sus credenciales
+        var config = {
+            apiKey: "AIzaSyA1D4qhVZUo43n3rj0YSYPO1cBXPlwvTIY",
+            authDomain: "fir-sample-f5466.firebaseapp.com",
+            databaseURL: "https://fir-sample-f5466.firebaseio.com",
+            //  projectId: "fir-sample-f5466",
+            storageBucket: "fir-sample-f5466.appspot.com",
+            messagingSenderId: "367764423618",
+            //appId: "1:367764423618:web:ef4cce3e2cd2f3f5b08c5b",
+            measurementId: "G-GDX87P2ZEG"
+        };
+        firebase.initializeApp(config);
+
+/**/</script>
+</head>
+<body>
+    <!--マップテキスト
+        <div id="map"></div>
+        <p>位置情報を利用する技術については<a href="./geolocation.html">ここ</a>を参照してください</p>
+            <h2>使い方</h2>
+            <ol>
+                <li>マップをクリックしてピンを立てます</li>
+                <li>下のテキスト入力欄にピンが指す場所の名前を入力します</li>
+                <li>ボタン“OKOK”を押します これで地点が登録されます</li>
+                <li>下にピンの番号に対応した場所の名前、緯度、経度が表示されます</li>
+                <li>ひとつ前のピンを取り消したい場合はボタン“NGNG”を押します</li>
+                <li>現在地から近い順に表示したい場合はボタン“Sabakan!”を押します</li>
+                <li>ページ下部に各地点の名前を表示したボタンが出現します 上にあるほど現在地から近いことを意味します</li>
+                <li>ボタン“OKOK”で登録された地点はブラウザに記憶されます ブラウザを閉じても記憶は維持されます</li>
+                <li>テキストボックスに番号を入れてボタン“KILL”を押すと番号のピンが消えます</li>
+            </ol>
+            <ul>
+                <li>緯度: <span id="lat"></span></li>
+                <li>経度: <span id="lng"></span></li>
+            </ul>
+            <input type="text" id="PositionName">
+            <button id="okok">OKOK</button>
+            <button id="ngng">NGNG</button>
+            <button id="kill">KILL</button>
+            <button onclick="sabakan();">Sabakan!</button>
+            <ol id="posList"></ol>
+            <div id="SabakanOutput"></div>
+
+    <br>
+    <br>
+    <br>
+
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" id="checkLed1">LED 1
+        </label>
+    </div>
+
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" id="checkLed2">LED 2
+        </label>
+        <br>水位2号
+    </div>
+        -->
+
+
+    <div id="device_Stat" class="device_Stat" style="float:left;">
+        <div id="device_Num" class="device_Num" style="float:left;">
+
+        </div>
+        <div id="device_Water" class="device_Water" style="float:left;">
+
+        </div>
+    </div>
+
+    <!-- 水位操作部分 各水位のボタンをformタグ内に入れ、formタグにはidをつけること -->
+    <form id="gate2" style="float:left; margin-left: 2vw;">
+
+        <label>
+            <input id="item-1" class="radio-inline__input" type="radio" name="level" value=0 style="">
+            <label class="radio-inline__label" for="item-1">
+                0
+            </label>
+            <input id="item-2" class="radio-inline__input" type="radio" name="level" value=4>
+            <label class="radio-inline__label" for="item-2">
+                4
+            </label>
+            <input id="item-3" class="radio-inline__input" type="radio" name="level" value=8>
+            <label class="radio-inline__label" for="item-3">
+                8
+            </label>
+            <input id="item-4" class="radio-inline__input" type="radio" name="level" value=12>
+            <label class="radio-inline__label" for="item-4">
+                12
+            </label>
+            <input id="item-5" class="radio-inline__input" type="radio" name="level" value=16>
+            <label class="radio-inline__label" for="item-5">
+                16
+            </label>
+        </label>
+
+    </form>
+    <div class="Send" onclick="submitscript('gate2')">
+        <progress id="pBar" class=" pBar" max="100" value="100"></progress>
+        <div class="SendMes" id="SendMes">送信！</div>
+    </div>
+
+
+
+    <iframe src="./menu.html"></iframe>
+
+
+    <script>
+
+    var db = firebase.database().ref('home');
+        //起動時    
+        db.once('value').then(function (snapshot) {
+            var gateID = snapshot.val().gateID; //ゲート番号を取得
+            var water = snapshot.val().gate2; //水位を取得
+            document.getElementById("device_Num").innerText = "" + gateID;
+            document.getElementById("device_Water").innerText = "" + water + "cm";
+        });
+
+        //データ更新時
+        db.on("child_changed", (snapshot) => { 
+            var water = snapshot.val(); //水位を取得
+            document.getElementById("device_Water").innerText = "" + water + "cm";
+        });
+
+
+
+
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function () {
+                FastClick.attach(document.body);
+            }, false);
+        }
+        /*
+        //後でコメントアウトしようね
+        //  Esqueleto de la BD
+          var db = firebase.database().ref('home').set({
+            led1:true,
+            led2:true,
+            gate:0,
+            done1:false
+          });
+
+        */
+
+
+        // último estado
+
+        db.on('value', function (data) {
+
+            $("#checkLed1").prop('checked', data.val().led1);
+            $("#checkLed2").prop('checked', data.val().led2);
+
+
+
+            var noticetext = "完了した端末 :";
+            if (data.val().done1 || data.val().done2) {
+                if (data.val().done1) noticetext += " 2";
+                if (data.val().done2) noticetext += " 3";
+                //alert(noticetext);
+                document.getElementById("notice").innerHTML = noticetext;
+
+
+                document.getElementById("pBar").value = 100;
+                document.getElementById("SendMes").innerText = "送信！";
+            } else {
+                document.getElementById("notice").innerHTML = "";
+
+                document.getElementById("pBar").value = 100;
+                document.getElementById("SendMes").innerText = "にゃーん...";
+            }
+        });
+
+
+
+
+        $("#checkLed1").click(function () {
+            var estado = $(this).is(':checked');
+
+            db.update({
+                led1: estado
+            });
+
+        });
+
+        $("#checkLed2").click(function () {
+            var estado = $(this).is(':checked');
+
+            db.update({
+                led2: estado
+            });
+
+        });
+
+        function submitscript(gateName) {
+            document.getElementById("pBar").removeAttribute("value")
+            document.getElementById("SendMes").innerText = "処理中...";
+
+
+            var lev = document.getElementById(gateName).level.value; //level -> accessible-radio
+            /*var updata = {};
+            updata[gateName] = lev;
+            updata[gateName + "Processing"] = true;
+            db.update(updata);*/
+
+            db.update({
+                gate2: lev,
+            }, function (error) {
+                if (error) {
+                    // The write failed...
+                    alert("送信エラーが発生しました");
+                } else {
+                    // Data saved successfully!
+                    document.getElementById("pBar").value = 100;
+                    document.getElementById("SendMes").innerText = "送信！";
+
+
+
+                }
+            });
+        }
+
+
+    </script>
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+        body {
+            font-family: 'Open Sans', helvetica, arial, sans-serif;
+            margin: 2rem auto 0;
+            line-height: 1.6;
+            color: #444;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        p {
+            margin: 0 0 1.6rem;
+            padding-bottom: 0.2rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .radio-inline__input {
+            clip: rect(1px, 1px, 1px, 1px);
+            position: absolute !important;
+            text-align: right;
+        }
+
+        .radio-inline__label { /*ボタン設定*/
+            width: 12vw;
+            height: 12vw;
+            float: left;
+            margin-left: 4vw;
+            display: inline-block;
+            border-radius: 6vw;
+            transition: all .1s;
+            box-shadow: 0 0 0 0.4vw #000;
+            padding-top: 0vw;
+            padding-left: 1vw;
+            font-size: 8vw;
+            vertical-align: middle;
+        }
+
+
+        .radio-inline__input:checked + .radio-inline__label {
+            background: #add8e6;
+            text-shadow: 0 0 1px rgba(0,0,0,.7);
+        }
+
+        .radio-inline__input:focus + .radio-inline__label {
+        }
+
+        .device_Stat {
+            display: inline-block;
+            text-align: center;
+            margin-left: 2vw;
+            color: #000000;
+            border: solid;
+            font-size: 4vw;
+            background-color: #fff5e6;
+            width: 12vw;
+            height: 12vw;
+        }
+         .device_Num {
+            text-align: center;
+            color: #000000;
+            font-size: 4vw;
+        }
+         .device_Water {
+            text-align: center;
+            color: #000000;
+            font-size: 4vw;
+        }
+
+         .pBar {
+             width: 75vw; 
+             height: 12vw; 
+             margin-left: 22vw; 
+             margin-top: 10px;
+        }
+
+         .Send {
+            display: inline-block;
+            position: relative;
+            padding: 0
+        }
+        /* --- 文字BOX(子要素) ------------------ */
+        .SendMes {
+            position: absolute; /* 親要素からの絶対位置 */
+            box-sizing: border-box;
+            white-space: nowrap; /* 折返しなし */
+            display: block; /* ブロック要素にする */
+            width: 100%; /* 親要素の幅に合わせる */
+            top: 55%; /* 親要素からの上位置 */
+            left: 0; /* 親要素からの左位置 */
+            text-align: center; /* 文字位置 */
+            transform: translateY(-50%); /* 文字BOXの位置ずらし */
+            padding: 10px; /* BOX内の余白 */
+            font-size: 8vw; /* 文字サイズ */
+            font-weight: bold; /* 太字 */
+            line-height: 1em; /* 1行の高さ */
+        }
+    </style>
+</body>
+</html>

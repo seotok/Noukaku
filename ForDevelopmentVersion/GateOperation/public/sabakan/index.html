@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="robots" content="index, follow">
+		<!-- Twitter用 -->
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="@KusaReMKN">
+		<meta name="twitter:creator" content="@KusaReMKN">
+		<meta name="twitter:image" content="http://www.kusaremkn.tk/img/MKNIcon.gif">
+		<meta name="twitter:description" content="水煮なのか味噌煮なのかと訊かれたら味噌煮。いろんな場所にピンを立ててどこが一番近いのか調べたりする。">
+		<meta property="og:title" content="鯖缶 蜜柑箱">
+		<meta property="og:type" content="article">
+		<meta property="og:description" content="水煮なのか味噌煮なのかと訊かれたら味噌煮。いろんな場所にピンを立ててどこが一番近いのか調べたりする。">
+		<meta property="og:url" content="https://www.kusaremkn.tk/co2/">
+		<meta property="og:site_name" content="二酸化炭素">
+		<meta property="og:image" content="http://www.kusaremkn.tk/img/MKNIcon.gif">
+		<!-- 文書情報 -->
+		<title>鯖缶 | 蜜柑箱</title>
+		<meta name="description" content="水煮なのか味噌煮なのかと訊かれたら味噌煮。いろんな場所にピンを立ててどこが一番近いのか調べたりする。">
+		<meta name="keywords" content="腐れ蜜柑, KusaReMKN, 🍊, 蜜柑箱, co2, 二酸化炭素, 鯖缶, Sabakan">
+		<meta name="author" content="KusaReMKN">
+		<!-- 視覚効果 -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" type="image/gif" href="/img/MKNIcon.gif" sizes="400x400">
+		<link rel="apple-touch-icon" type="image/gif" href="/img/MKNIcon.gif">
+		<link href="./css/common.css" type="text/css" rel="stylesheet">
+		<script src="https://maps.googleapis.com/maps/api/js?callback=initMap&language=ja" async defer></script>
+		<script src="./js/map.js" async defer></script>
+	</head>
+
+	<body>
+		<div id="map"></div>
+		<p>位置情報を利用する技術については<a href="./geolocation.html">ここ</a>を参照してください</p>
+		<h2>使い方</h2>
+		<ol>
+			<li>マップをクリックしてピンを立てます</li>
+			<li>下のテキスト入力欄にピンが指す場所の名前を入力します</li>
+			<li>ボタン“OKOK”を押します これで地点が登録されます</li>
+			<li>下にピンの番号に対応した場所の名前、緯度、経度が表示されます</li>
+			<li>ひとつ前のピンを取り消したい場合はボタン“NGNG”を押します</li>
+			<li>現在地から近い順に表示したい場合はボタン“Sabakan!”を押します</li>
+			<li>ページ下部に各地点の名前を表示したボタンが出現します 上にあるほど現在地から近いことを意味します</li>
+			<li>ボタン“OKOK”で登録された地点はブラウザに記憶されます ブラウザを閉じても記憶は維持されます</li>
+			<li>テキストボックスに番号を入れてボタン“KILL”を押すと番号のピンが消えます</li>
+		</ol>
+		<ul>
+			<li>緯度: <span id="lat"></span></li>
+			<li>経度: <span id="lng"></span></li>
+		</ul>
+		<input type="text" id="PositionName">
+		<button id="okok">OKOK</button>
+		<button id="ngng">NGNG</button>
+		<button id="kill">KILL</button>
+		<button onclick="sabakan();">Sabakan!</button>
+		<ol id="posList"></ol>
+		<div id="SabakanOutput"></div>
+	</body>
+
+</html>
