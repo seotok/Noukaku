@@ -5,6 +5,10 @@ Gitの使い方やREADMEの書き方などの説明、開発にあたっての�
 
 ファイルの説明
 -----
+- Firebase_Detail.pdf
+
+    - Firebaseの機能について概要だけ書いてある。
+
 - [HowToUseGit.md](./HowToUseGit.md)
 
     - Gitの使い方(プッシュ、プルなど)について書いてある
@@ -23,4 +27,4 @@ Gitの使い方やREADMEの書き方などの説明、開発にあたっての�
 
 - [DevRule.md](./DevRule.md)
 
-    - 開発にあたっての取り決めなどが書かれりゅ予定
+    - 開発にあたっての取り決めなどが書かれる予定
