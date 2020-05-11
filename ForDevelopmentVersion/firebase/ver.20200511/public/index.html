@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>*Beta* Gate Level Controller</title>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+
+  <!-- firebase のjsファイル -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+
+  <script>
+    // firebase の 初期化
+    var config = {
+      apiKey: "AIzaSyAI2_HPjp6941-xfZ6FQ3qRZMUICy0ni4I",
+      authDomain: "test01-fc911.firebaseapp.com",
+      databaseURL: "https://test01-fc911.firebaseio.com",
+      projectId: "test01-fc911",
+      storageBucket: "test01-fc911.appspot.com",
+      messagingSenderId: "774709465749",
+      appId: "1:774709465749:web:e5383bd9b3006fd5af419c",
+      measurementId: "G-MXPFLT1F3J"
+    };
+    firebase.initializeApp(config);
+  </script>
+</head>
+
+<body>
+  <h1>水位調整ページ</h1>
+  <div>水位2号</div>
+
+  <!-- 水位操作部分 各水位のボタンをformタグ内に入れ、formタグにはidをつけること -->
+  <form id="gate2">
+    <label>
+      <input type="radio" name="level" value=0>0  <!-- 左記のvalueの値が下の関数呼び出し時に渡される。-->
+      <input type="radio" name="level" value=4>4  <!-- ボタンを押すと上のformのidにvalueの値が渡されるイメージ? -->
+      <input type="radio" name="level" value=8>8  <!-- 構造は {id名} -> {name名} -> {value} って感じ -->
+      <input type="radio" name="level" value=12>12
+      <input type="radio" name="level" value=16>16
+    </label>
+  </form>
+
+  <div class="button">
+    <!-- 送信時に関数を呼び出す。引数には上記formタグのidを渡す。水位がデータベースのこの名前の箇所に書き込まれる -->
+    <input type="button" name="送信" onclick="submitscript('gate2')">送信
+  </div>
+
+  <br />水位3号
+  <form id="gate3">
+    <label>
+      <input type="radio" name="level" value=0>0
+      <input type="radio" name="level" value=4>4
+      <input type="radio" name="level" value=8>8
+      <input type="radio" name="level" value=12>12
+      <input type="radio" name="level" value=16>16
+    </label>
+  </form>
+  <div class="button">
+    <input type="button" name="送信" onclick="submitscript('gate3')">送信
+  </div>
+
+  <br />
+  <h3>以下ログインしたユーザー専用</h3>
+  <div id="yourname">あなたはログインしていません。ログインは<a href="./login.html">こちら</a>から。</div>
+  <div>child1</div>
+
+  <!-- ログイン機能を付加した場合 上と同じく各水位ボタンをformタグでくくり、idをつける -->
+  <form id="child1">
+    <label>
+      <input type="radio" name="level" value=0>0
+      <input type="radio" name="level" value=4>4
+      <input type="radio" name="level" value=8>8
+      <input type="radio" name="level" value=12>12
+      <input type="radio" name="level" value=16>16
+    </label>
+  </form>
+  <div class="button">
+    <!-- 送信時に呼び出す関数は下記のとおり。第一引数には親機の名前、第二引数には上記のformのid（子機の名前）-->
+    <input type="button" name="送信" onclick="databaseWrite('parent1','child1')">送信
+  </div>
+  <!--
+  <br />ログイン機能にはクッキーを使用しています。正常に機能しない場合は、クッキーを許可してください。
+    -->
+  <script>
+    var db = firebase.database().ref('home');  // 試験用RealTimeDatabase領域へアクセスするためのやつ
+    var userID;  // ログインユーザーのIDを保存する変数
+    //var usersDB;  // ログインユーザーのRealTimeDatabase領域へアクセスするためのやつ
+
+    firebase.auth().onAuthStateChanged(async user => {
+      // ログイン処理 authの初期化が終わるまでユーザーIDの取得やデータベースへのアクセスができないことに注意
+      if (user) {  // ログイン成功時
+        userID = user.uid;  // ユーザーIDの取得
+        userName = user.displayName;  // ユーザー名の取得
+        document.getElementById("yourname").innerHTML = userName + "のparent1  ユーザー切り替えは<a href='./login.html'>こちら</a>から";
+        // usersDB = firebase.database().ref('users/' + userID);  // データベースへのアクセスを取得
+        console.log("login success : " + userID);
+         user.getIdTokenResult().then((result) => {
+            console.log(result.claims);
+          })
+        // ...
+      } else {  // ログイン失敗時
+        console.log("login failed");
+      }
+      // ...
+      
+    });
+
+    //console.log("userID : " + userID);  // authの初期化が終わるまでuserIDはundefinedであることに注意
+
+    // RealTimeDatabaseに変更があった際にログ出力
+    db.on('value', function (data) {
+      console.log("data : ", data.val());
+    });
+
+    function submitscript(gateName) {  // home領域へ書き込み  gateName : 水位ボタンの含まれるformのidであること
+      var lev = document.getElementById(gateName).level.value;
+      var updata = {};
+      updata[gateName] = lev;
+      updata[gateName + "processing"] = true;
+      db.update(updata);
+    };
+
+    function databaseWrite(parentName, childName) {  // parentName : 親機の名前  childName : 子機の名前 これはformのidである必要がある
+      // 各ユーザの領域への書き込み
+      var lev = document.getElementById(childName).level.value;
+      var updata = {};
+      updata["level"] = Number(lev);
+      updata["processing"] = true;
+      console.log('users/' + userID + '/' + parentName + '/' + childName + '/', updata);
+      firebase.database().ref('users/' + userID + '/' + parentName + '/' + childName + '/').update(updata);
+    };
+
+    function databaseWriteJS(parentName, childName, lev) {  // parentName : 親機の名前  childName : 子機の名前 lev : 水位
+      // databaseWriteのjsの関数から呼び出す用の関数
+      var updata = {};
+      updata["level"] = Number(lev);
+      updata["processing"] = true;
+      console.log('users/' + userID + '/' + parentName + '/' + childName + '/', updata);
+      firebase.database().ref('users/' + userID + '/' + parentName + '/' + childName + '/').update(updata);
+    };
+
+    /*
+     * データ構造はこんな感じ
+     * users
+     * |
+     * +-{userID}
+     *     |
+     *     +-{parentName}
+     *         |
+     *         +-{childName}
+     *             |
+     *             +-level
+     *             +-processing
+     */
+
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>admin test</title>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+
+  <!-- firebase のjsファイル -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.4/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-functions.js"></script>
+
+  <script>
+    // firebase の 初期化
+    var config = {
+      apiKey: "AIzaSyAI2_HPjp6941-xfZ6FQ3qRZMUICy0ni4I",
+      authDomain: "test01-fc911.firebaseapp.com",
+      databaseURL: "https://test01-fc911.firebaseio.com",
+      projectId: "test01-fc911",
+      storageBucket: "test01-fc911.appspot.com",
+      messagingSenderId: "774709465749",
+      appId: "1:774709465749:web:e5383bd9b3006fd5af419c",
+      measurementId: "G-MXPFLT1F3J"
+    };
+    firebase.initializeApp(config);
+  </script>
+</head>
+
+<body>
+
+
+  <script>
+
+    firebase.auth().onAuthStateChanged(async currentUser => {
+      if (currentUser) {
+        idToken = await currentUser.getIdToken();
+        console.log(idToken);
+        // 何らかの認証が必要なリクエストをIDトークン付きで飛ばす
+        const cclaim = firebase.functions().httpsCallable("cctest");
+        const firefunc = firebase.functions().httpsCallable("idecho");
+        //引数を付けて呼び出し
+        cclaim({ idToken }).then(res => {
+          console.log(res);
+          currentUser.getIdTokenResult().then((result) => {
+            console.log(result.claims);
+          })
+        }).catch(e => {
+          console.log(e);
+        })
+      } else {
+        console.log('error');
+      }
+    });
+  </script>
+
+</body>
+</html>
