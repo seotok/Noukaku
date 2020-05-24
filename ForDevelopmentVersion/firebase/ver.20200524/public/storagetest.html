@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+          integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+          crossorigin="anonymous"></script>
+
+  <!-- firebase のjsファイル -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-storage.js"></script>
+  <script>
+    // firebase の 初期化
+    var config = {
+      apiKey: "AIzaSyAI2_HPjp6941-xfZ6FQ3qRZMUICy0ni4I",
+      authDomain: "test01-fc911.firebaseapp.com",
+      databaseURL: "https://test01-fc911.firebaseio.com",
+      projectId: "test01-fc911",
+      storageBucket: "test01-fc911.appspot.com",
+      messagingSenderId: "774709465749",
+      appId: "1:774709465749:web:e5383bd9b3006fd5af419c",
+      measurementId: "G-MXPFLT1F3J"
+    };
+    firebase.initializeApp(config);
+  </script>
+</head>
+<body>
+  <form id="form1" action="#">
+    <input type="text" id="input_message" value="">
+    <input type="button" onclick="func1()" value="送信">
+    <input type="button" onclick="downloadbutton()" value="ダウンロード">
+  </form>
+  
+
+  <div id="mycsv">
+  </div>
+  <script>
+    var storageRef = firebase.storage().ref();
+    var csvRef = storageRef.child('test.csv');
+    var bytes = new Uint8Array([0x48, 0x65, 0x6c, 0x6c, 0x6f, 0x2c, 0x20, 0x77, 0x6f, 0x72, 0x6c, 0x64, 0x21]);
+    csvRef.put(bytes).then(function(snapshot) {
+      console.log('Uploaded an array!');
+    });
+    function downloadbutton() {
+      csvRef.getDownloadURL().then(function (url) {
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.send();
+        xhr.onload = function (event) {
+          document.getElementById('mycsv').innerHTML = xhr.responseText;
+          console.log(xhr.responseText);
+          var blob = xhr.response;
+        };
+
+      }).catch(function (error) {
+        console.log('Download_URL_Error');
+      });
+    }
+  </script>
+</body>
+</html>
