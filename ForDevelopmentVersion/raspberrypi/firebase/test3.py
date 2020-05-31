@@ -180,7 +180,7 @@ while loop <= maxdevice:
 
 while True:  # 主ループ
     loop = 2  # 開発で使用している子機の番号が(ry
-    while (loop <= maxdevice):
+    while (loop <= maxdevice):  # この辺は関数にまとめてもいいかも
         gatenum = db.child("home/gate%d" % loop).get()  # データベースの各子機の水門の高さを確認
         if(lastlevel[loop] != int(gatenum.val())):  # 変更があれば子機に高さを調整するよう送信
             lastlevel[loop] = int(gatenum.val())
@@ -194,7 +194,7 @@ while True:  # 主ループ
     DataWrite(line)  # データ書き込み
 
     loop = 2
-    while(loop <= maxdevice):
+    while(loop <= maxdevice):  # この辺も関数に(ry
         if 'Dev%d:Gate Complete nowLv :'%loop in printable(line):  # 子機からの動作完了メッセージを受信したら
             updata = {}
             updata["gate%dProcessing"%loop] = False  # データベースの処理中かどうかを表す項目をfalse(動作完了)に書き換える
